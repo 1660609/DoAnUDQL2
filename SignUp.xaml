@@ -1,12 +1,37 @@
 ﻿<Window x:Class="TabMenu.SignUp"
+        xmlns:w="clr-namespace:TabMenu"  
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         Title="SignUp" Height="530.147" Width="730.147"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:local="clr-namespace:TabMenu"
+       
         mc:Ignorable="d"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="0,2,40,2" />
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <DockPanel LastChildFill="true">
+                            <Border Background="OrangeRed" DockPanel.Dock="right" Margin="5,0,0,0" 
+                                Width="20" Height="20" CornerRadius="5"
+                                ToolTip="{Binding ElementName=customAdorner, 
+                                          Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                                <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center" 
+                                   FontWeight="Bold" Foreground="white" />
+                            </Border>
+                            <AdornedElementPlaceholder Name="customAdorner" VerticalAlignment="Center" >
+                                <Border BorderBrush="red" BorderThickness="1" />
+                            </AdornedElementPlaceholder>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -14,7 +39,7 @@
             <RowDefinition Height="355*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid  HorizontalAlignment="Right" Margin="0,0,0.4,19" Width="724" Grid.Row="0">
-            <Button Click="btnHome" Content="Đồ án cuối kì" Background="WhiteSmoke" Foreground="Gray"  BorderThickness="0" FontSize="20" FontWeight="Bold" FontStyle="Italic" VerticalAlignment="Center"  Margin="10,11,559,10"/>
+            <Button Click="btnHome" Content="Đồ án cuối kì" Background="WhiteSmoke" Foreground="Gray"  BorderThickness="0" FontSize="20" FontWeight="Bold" FontStyle="Italic" VerticalAlignment="Center"  Margin="10,11,558,-0.2" Height="31"/>
             <Button Content="LOGIN" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFA2A2A2" FontSize="15" FontWeight="Bold"  VerticalAlignment="Top" Margin="411,10,166,0" Height="39" Click="Button_Click"/>
             <Button Content="CLOSE" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFA2A2A2" VerticalAlignment="Top" IsCancel="True" Click="ButtonClose_Click" RenderTransformOrigin="0.561,2.3" Height="40" Margin="559,9,27,0"/>
         </Grid>
@@ -26,19 +51,39 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
         </Grid>
-        <Image Source=".\Images\darksky.jpeg" Stretch="Fill" Margin="0,53,0.4,0.4" Grid.RowSpan="2" />
+        <Image Source=".\Images\galaxy.jpg" Stretch="Fill" Margin="0,53,0.4,0.4" Grid.RowSpan="2" />
         <Grid Grid.Row="1" Margin="0,0.4,0.4,0.4">
-            <Grid Margin="204,10,217,9.6" Background="Azure">
+            <Grid x:Name="grid_EmployeeData" Margin="187,10,202,9.8" Background="Azure">
+                <Grid.CommandBindings>
+                    <CommandBinding Command="New" CanExecute="Confirm_CanExecute" Executed="Confirm_Executed" />
+                </Grid.CommandBindings>
                 <TextBlock Text="Đăng Ký" FontSize="30" HorizontalAlignment="Center" Margin="92,10,101,297"/>
                 <TextBlock Text="Email:" FontSize="13" Height="35" Margin="36,89,218.6,325.2" VerticalAlignment="Center" FontWeight="Black"/>
-                <TextBox x:Name="txb1" Margin="121,79,6.6,335.2" BorderBrush="Black" BorderThickness="1"/>
+                <TextBox Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Email,
+                          ValidatesOnDataErrors=true, NotifyOnValidationError=true}" 
+                          x:Name="txb1" Margin="121,79,25.6,335" BorderBrush="Black" BorderThickness="1"/>
                 <TextBlock Text="Mật khẩu:" FontSize="13" Height="36" Margin="25,139,0,274.2" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Black"/>
-                <PasswordBox x:Name="pwb1" Margin="122,130,7.6,285.2" BorderBrush="Black" BorderThickness="1"/>
-                <TextBlock Text="Tên người dùng:" FontSize="13" Height="35" Margin="9,192,192.6,222.2" VerticalAlignment="Center" FontWeight="Black"/>
-                <TextBox x:Name="txb2" Margin="121,180,5.6,233.2" BorderBrush="Black" BorderThickness="1"/>
-                <Button Click="ButtonSignup_Click" Content="Đăng ký tài khoản" FontSize="20" Margin="49,246,57.6,153.2" BorderBrush="Aqua" BorderThickness="2" Background="Gray" Height="Auto"/>
-                <Button Click="Button_Click_1" Content="Reset" FontSize="20" Margin="49,322,57.6,77.2" BorderBrush="Aqua" BorderThickness="2" Background="Gray" Height="Auto"/>
+                <TextBox Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=password,
+                              ValidatesOnDataErrors=true, NotifyOnValidationError=true}"
+                              x:Name="pwb1" Margin="122,130,25.6,285" 
+                         BorderBrush="Black" BorderThickness="1" RenderTransformOrigin="0.5,0.5"/>
+                
+                <PasswordBox x:Name="pwb2"         
+                  w:PasswordHelper.Attach="True"
+                 w:PasswordHelper.Password="{Binding Text, ElementName=pwb1 ,Mode=TwoWay}" Margin="120,130,25.6,285">
+                    <PasswordBox.Style>
+                        <Style TargetType="{x:Type PasswordBox}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </Style>
+                    </PasswordBox.Style>
+                </PasswordBox>
 
+                <TextBlock Text="Tên người dùng:" FontSize="13" Height="37" Margin="10,191,189.6,221" VerticalAlignment="Center" FontWeight="Black"/>
+                <TextBox  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=username,
+                          ValidatesOnDataErrors=true, NotifyOnValidationError=true}"
+                          x:Name="txb2" Margin="121,180,23.6,233" BorderBrush="Black" BorderThickness="1"/>
+                <Button Click="ButtonSignup_Click"  Content="Đăng ký tài khoản" FontSize="20" Margin="49,266,57.6,133" BorderBrush="Aqua" BorderThickness="2" Background="Gray" Height="Auto"/>
+                <Button Click="Button_Click_1" Content="Reset" FontSize="20" Margin="49,342,57.6,57" BorderBrush="Aqua" BorderThickness="2" Background="Gray" Height="Auto"/>
             </Grid>
         </Grid>
 

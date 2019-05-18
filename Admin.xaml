@@ -6,8 +6,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:TabMenu"
         mc:Ignorable="d" Height="700" Width="1280" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowStyle="None">
-    <StackPanel Background="Gainsboro" >
-        <Grid Height="40">
+    <Grid Background="Gainsboro" >
+        <Grid Height="40" Margin="10,10,-10,650">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="47*"/>
                 <ColumnDefinition Width="33*"/>
@@ -30,7 +30,7 @@
                 <Button Content="CLOSE" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Bottom" IsCancel="True" Click="Button_Click_1" RenderTransformOrigin="0.561,2.3" Height="40" Width="85" Margin="0,0,0,-2"/>
             </StackPanel>
         </Grid>
-        <Grid Height="100">
+        <Grid Height="100" Margin="10,55,-10,545">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10 0">
                 <Button Uid="0" Width="150" Content="PHIM" Height="50" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Click="Button_Click"/>
                 <Menu Background="Gainsboro">
@@ -44,15 +44,29 @@
                         HorizontalContentAlignment="Center" Foreground="#FF2196F3" Click="Button_Click"/>
                 <Button Uid="4" Width="150" Content="IMD" Height="50" Background="{x:Null}" BorderBrush="{x:Null}"
                         HorizontalContentAlignment="Center" Foreground="#FF2196F3" Click="Button_Click"/>
-                <Button Content="Thông tin tài khoản"
+                <Button Uid="5" Content="Thông tin tài khoản"
                         Background="{x:Null}" BorderBrush="{x:Null}"
-                        HorizontalContentAlignment="Center" Foreground="#FF2196F3" Height="50"></Button>
+                        HorizontalContentAlignment="Center" Foreground="#FF2196F3" Height="50"
+                        Click="Button_Click"></Button>
             </StackPanel>
             <Grid x:Name="GridCursor" Width="150" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" Margin="10 0"/>
         </Grid>
-        <Grid x:Name="GridMain" Height="460" Background="Aquamarine">
-
+        <Grid x:Name="GridMain" Height="460" Background="Aquamarine"></Grid>
+        <Grid x:Name="GridInfoAd"  Margin="0,120" Visibility="Visible">
+            <Grid Background="White">
+                <TextBlock Text="Email:" Height="50" FontSize="30" Margin="102,43,1033,367"/>
+                <TextBox Height="50" Margin="279,43,815,367"
+                         BorderBrush="Brown" BorderThickness="2"/>
+                <TextBlock Text="Password:" Height="50" FontSize="30" Margin="102,117,1033,293"/>
+                <TextBox Height="50" Margin="279,117,815,293"
+                         BorderBrush="Brown" BorderThickness="2"/>
+                <TextBlock Text="Username:" Height="50" FontSize="30" Margin="102,198,1033,212"/>
+                <TextBox Height="50" Margin="279,198,815,212"
+                         BorderBrush="Brown" BorderThickness="2"/>
+                <Button Content="OK" Height="Auto" Margin="32,356,1109,36" FontSize="40" FontWeight="Bold"/>
+                <Button Content="Cancel" Height="Auto" Margin="279,354,839,38" FontSize="40" FontWeight="Bold"/>
+            </Grid>
         </Grid>
-    </StackPanel>
+    </Grid>
 </Window>
 
